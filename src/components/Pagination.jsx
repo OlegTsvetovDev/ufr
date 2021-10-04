@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Pagination = ({page, changePage, limit}) => {
+const Pagination = ({page, changePage, limit, setLimit}) => {
 
   const handlePaginationInput = e => {
     let value = +e.target.value
@@ -15,7 +15,8 @@ const Pagination = ({page, changePage, limit}) => {
         <p className="pagination__header">Фильтр страниц</p>
         <input type="text" className="pagination__input"
           tooltip="1"
-          onChange={e => handlePaginationInput(e)}
+          value={page}
+          onChange={handlePaginationInput}
         />
         {
           page > 1 &&
@@ -40,6 +41,15 @@ const Pagination = ({page, changePage, limit}) => {
               >&gt;</button>
             </>
         }
+        <select className="pagination__select"
+          value={limit}
+          onChange={e => setLimit(e.target.value)}
+        >
+          <option value="5" className="pagination__option">5</option>
+          <option value="10" className="pagination__option">10</option>
+          <option value="25" className="pagination__option">25</option>
+          <option value="-1" className="pagination__option">Все</option>
+        </select>
       </div>
     </div>
   )

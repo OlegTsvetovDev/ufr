@@ -373,6 +373,15 @@
   color: #fff;
 }
 
+.pagination .pagination__content .pagination__select {
+  padding: 8px 12px;
+  margin-left: 4px;
+}
+
+.pagination .pagination__content .pagination__select .pagination__option {
+
+}
+
 .login {
   display: -webkit-flex;
   display: -ms-flex;

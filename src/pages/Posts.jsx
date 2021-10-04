@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect} from 'react'
 import PostList from '../components/PostList'
 import PostForm from '../components/PostForm'
 import PostSort from '../components/PostSort'
@@ -15,22 +15,22 @@ const Posts = () => {
   const [posts, setPosts] = useState([])
   const [filter, setFilter] = useState({sort: '', query: ''})
   const [modalActive, setModalActive] = useState(false)
-  // eslint-disable-next-line
   const [totalPages, setTotalPages] = useState(0)
-  // eslint-disable-next-line
   const [limit, setLimit] = useState(10)
   const [page, setPage] = useState(1)
   const [fetchPosts, arePostsLoading, fetchError] = useFetching(async () => {
     const response = await PostService.getAll(limit, page)
     const totalCount = response.headers['x-total-count']
-    setPosts([...posts, ...response.data])
+    setPosts(response.data)
     setTotalPages(getPagesCount(totalCount, limit))
   })
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
-  const lastElement = useRef()
 
-  // eslint-disable-next-line
-  useEffect(() => fetchPosts(), [page])
+
+  useEffect(() => {
+    fetchPosts()
+    // остался баг с итоговым пересчетом количества страниц в пагинации
+  }, [page, limit])
 
   const changePage = page => setPage(page)
 
@@ -39,7 +39,7 @@ const Posts = () => {
       <div className="controls">
         <div className="controls__content">
           <Pagination
-            limit={limit}
+            limit={limit} setLimit={setLimit}
             page={page} changePage={changePage}
           />
           <PostFilter
@@ -69,7 +69,6 @@ const Posts = () => {
             title="Список постов"
           />
       }
-      <div ref={lastElement} className="last_element"/>
       <PostForm
         posts={posts} setPosts={setPosts}
         modalActive={modalActive} setModalActive={setModalActive}
