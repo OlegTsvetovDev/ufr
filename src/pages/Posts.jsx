@@ -29,7 +29,7 @@ const Posts = () => {
 
   useEffect(() => {
     fetchPosts()
-    // остался баг с итоговым пересчетом количества страниц в пагинации
+    // остался баг с итоговым пересчетом количества страниц в пагинации totalPages
   }, [page, limit])
 
   const changePage = page => setPage(page)
