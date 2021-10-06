@@ -29,7 +29,6 @@ const Posts = () => {
 
   useEffect(() => {
     fetchPosts()
-    // остался баг с итоговым пересчетом количества страниц в пагинации totalPages
   }, [page, limit])
 
   const changePage = page => setPage(page)
@@ -41,6 +40,7 @@ const Posts = () => {
           <Pagination
             limit={limit} setLimit={setLimit}
             page={page} changePage={changePage}
+            totalPages={totalPages}
           />
           <PostFilter
             filter={filter} setFilter={setFilter}

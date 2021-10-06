@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Pagination = ({page, changePage, limit, setLimit}) => {
+const Pagination = ({page, changePage, limit, setLimit, totalPages}) => {
 
   const handlePaginationInput = e => {
     let value = +e.target.value
-    if (value > limit) value = limit
+    if (value > totalPages) value = totalPages
     if (value < 1) value = 1
     changePage(value)
   }
@@ -31,7 +31,7 @@ const Pagination = ({page, changePage, limit, setLimit}) => {
         }
         <button className="pagination__button active">{page}</button>
         {
-          page < limit &&
+          page < totalPages &&
             <>
               <button className="pagination__button"
                 onClick={() => changePage(page + 1)}
